@@ -1,0 +1,43 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "agage-backoffice",
+  // Conta agage.eng@gmail.com: a mesma da zona agage.com.br (necessário para o domínio da API).
+  "account_id": "acd5148881e4fe2cabc5e85ebee3335a",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  // Backoffice (painel) e API pública no mesmo Worker. Exige a zona agage.com.br nesta conta.
+  "routes": [{ "pattern": "api.agage.com.br", "custom_domain": true }],
+  "observability": {
+    "enabled": true
+  },
+  // Configuração não secreta. Segredos (BETTER_AUTH_SECRET, RESEND_API_KEY) via `wrangler secret put`;
+  // em desenvolvimento, via `.dev.vars` (fora do git).
+  "vars": {
+    "BETTER_AUTH_URL": "https://api.agage.com.br",
+    "PUBLIC_SITE_URL": "https://agage.com.br",
+    "EMAIL_FROM": "AGAGE <nao-responda@agage.com.br>",
+    // Opcional: restringe o cadastro do primeiro usuário a este e-mail.
+    "BOOTSTRAP_ADMIN_EMAIL": "soujoseeugenio@gmail.com",
+    // R2 via API S3 (credenciais R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY são secrets). O bucket
+    // fica na conta soujoseeugenio@gmail.com: o acesso é por chave, não precisa ser a conta do Worker.
+    "R2_ACCOUNT_ID": "9b9cbf554ef9a143e024c9d5cebd9387",
+    "R2_BUCKET": "agage-backoffice-media",
+    // Chave pública do widget Turnstile (a secreta é o secret TURNSTILE_SECRET_KEY).
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAFzbIbjHYgzdOl1b"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "agage-backoffice",
+      "database_id": "172bba56-06c6-42bc-8156-a1dafcbba5f8",
+      // Banco local de desenvolvimento (mantém os dados locais já existentes).
+      "preview_database_id": "9815b47e-4e37-4ddb-8843-72aa86271931",
+      "migrations_dir": "drizzle/migrations"
+    }
+  ]
+}
