@@ -53,6 +53,18 @@ jobs:
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
+      - name: Conferir secrets obrigatórios
+        env:
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+        run: |
+          missing=""
+          [ -n "$CLOUDFLARE_API_TOKEN" ] || missing="$missing CLOUDFLARE_API_TOKEN"
+          [ -n "$BETTER_AUTH_SECRET" ] || missing="$missing BETTER_AUTH_SECRET"
+          if [ -n "$missing" ]; then
+            echo "::error::Secrets ausentes:$missing. Cadastre em Settings > Secrets and variables > Actions e rode o workflow de novo."
+            exit 1
+          fi
+
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
