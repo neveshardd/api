@@ -6,8 +6,9 @@ import { type HTMLAttributes, type HTMLInputTypeAttribute, useId, useState } fro
 import { type Control, type FieldPath, type FieldValues, useController } from "react-hook-form";
 import { icon } from "@/components/shared/icons/AppIcon";
 
-interface TextFieldProps<T extends FieldValues> {
-  readonly control: Control<T>;
+interface TextFieldProps<T extends FieldValues, TOutput extends FieldValues = T> {
+  /** Aceita formulários cujo valor validado (Zod) difere do digitado. */
+  readonly control: Control<T, unknown, TOutput>;
   readonly name: FieldPath<T>;
   readonly label: string;
   readonly type?: HTMLInputTypeAttribute;
@@ -25,7 +26,7 @@ interface TextFieldProps<T extends FieldValues> {
  * Campo de texto Blueprint integrado ao React Hook Form.
  * Erros e dicas são associados ao input por `aria-describedby`, e `aria-invalid` sinaliza o erro.
  */
-export function TextField<T extends FieldValues>({
+export function TextField<T extends FieldValues, TOutput extends FieldValues = T>({
   control,
   name,
   label,
@@ -37,7 +38,7 @@ export function TextField<T extends FieldValues>({
   inputMode,
   maxLength,
   revealable = false,
-}: TextFieldProps<T>) {
+}: TextFieldProps<T, TOutput>) {
   const { field, fieldState } = useController({ control, name });
   const [revealed, setRevealed] = useState(false);
   const inputId = useId();

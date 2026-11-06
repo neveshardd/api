@@ -8,6 +8,12 @@ export {
 } from "@/features/auth/infrastructure/schema";
 export { deviceVerifications, trustedDevices } from "@/features/devices/infrastructure/schema";
 export { documents } from "@/features/documents/infrastructure/schema";
+export { employees } from "@/features/employees/infrastructure/schema";
 export { siteContent } from "@/features/site-content/infrastructure/schema";
+export {
+  timeEntries,
+  timePresets,
+  timesheetSettings,
+} from "@/features/timesheet/infrastructure/schema";
 export { invitations } from "@/features/users/infrastructure/schema";
 export { videos } from "@/features/videos/infrastructure/schema";

@@ -1,6 +1,8 @@
 import {
   IconBook,
+  IconClock,
   IconDevices,
+  IconId,
   IconLayoutDashboard,
   IconPhoto,
   IconSchool,
@@ -48,6 +50,8 @@ export const backofficeNavigation: readonly NavigationItem[] = [
     href: "/textos-e-imagens",
     icon: IconPhoto,
   },
+  { id: "employees", label: "Colaboradores", href: "/colaboradores", icon: IconId },
+  { id: "timesheet", label: "Ponto", href: "/ponto", icon: IconClock },
   { id: "users", label: "Usuários", href: "/usuarios", icon: IconUsers },
   { id: "devices", label: "Dispositivos", href: "/dispositivos", icon: IconDevices },
 ];
