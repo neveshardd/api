@@ -1,0 +1,5 @@
+# Mesmo fim de linha (LF) em qualquer sistema: evita diferenças de formatação entre Windows e CI.
+* text=auto eol=lf
+*.png binary
+*.ico binary
+*.pdf binary
